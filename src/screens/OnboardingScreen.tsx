@@ -185,7 +185,7 @@ export function OnboardingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101f61',
+    backgroundColor: '#d2eef9',
   },
   skip: {
     position: 'absolute',
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   skipText: {
-    color: 'rgba(255,255,255,0.55)',
+    color: 'rgba(18, 50, 74, 0.58)',
     fontSize: 16,
   },
   slide: {
@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
   },
   file: {
     alignSelf: 'flex-start',
-    color: '#ffc21c',
+    color: '#0f87b8',
     fontSize: 13,
     letterSpacing: 3.4,
     fontWeight: '800',
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   title: {
-    color: '#f5f7ff',
+    color: '#12324a',
     fontSize: 30,
     lineHeight: 36,
     textAlign: 'center',
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   description: {
-    color: 'rgba(232,236,255,0.78)',
+    color: 'rgba(28, 74, 103, 0.78)',
     fontSize: 15,
     lineHeight: 30,
     textAlign: 'center',
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: 'rgba(255,255,255,0.24)',
+    backgroundColor: 'rgba(18, 86, 122, 0.22)',
   },
   dotActive: {
     width: 22,
@@ -268,12 +268,12 @@ const styles = StyleSheet.create({
     height: 56,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
+    borderColor: 'rgba(15,135,184,0.18)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   backButtonText: {
-    color: '#eef2ff',
+    color: '#12324a',
     fontSize: 28,
     fontWeight: '700',
   },

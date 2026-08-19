@@ -154,7 +154,7 @@ export function LoadingScreen({ navigation }: Props) {
           },
         ]}
       >
-        SNEAKY CASES
+        CASE WHISPER
       </Animated.Text>
       <View style={styles.bar}>
         <Animated.View style={[styles.fill, { width }]} />
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(10, 24, 76, 0.34)',
+    backgroundColor: 'rgba(204, 236, 255, 0.48)',
   },
   logoWrap: {
     marginBottom: 26,
@@ -186,14 +186,14 @@ const styles = StyleSheet.create({
     height: 194,
   },
   brand: {
-    color: '#ffc21c',
+    color: '#0f6e95',
     fontSize: 13,
     letterSpacing: 5,
     marginBottom: 16,
     fontWeight: '700',
   },
   title: {
-    color: '#eef3ff',
+    color: '#12324a',
     fontSize: 42,
     lineHeight: 46,
     fontWeight: '900',
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
   bar: {
     width: 280,
     height: 8,
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    backgroundColor: 'rgba(18, 86, 122, 0.14)',
     borderRadius: 999,
     overflow: 'hidden',
     marginBottom: 14,
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   caption: {
-    color: 'rgba(234, 239, 255, 0.68)',
+    color: 'rgba(18, 50, 74, 0.72)',
     fontSize: 12,
     letterSpacing: 2,
   },

@@ -153,9 +153,9 @@ function AnimatedTabIcon({ icon, focused, size, iconSize, compact }: { icon: str
 const styles = StyleSheet.create({
   tabBar: {
     position: 'absolute',
-    backgroundColor: '#172a6f',
+    backgroundColor: '#7ecff5',
     borderWidth: 1,
-    borderColor: 'rgba(255, 194, 28, 0.35)',
+    borderColor: 'rgba(18, 86, 122, 0.18)',
     elevation: 0,
   },
   tabItem: {
@@ -169,21 +169,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 2,
     borderRadius: 999,
-    backgroundColor: 'rgba(255, 194, 28, 0.38)',
+    backgroundColor: 'rgba(255, 194, 28, 0.28)',
   },
   iconWrap: {
     alignItems: 'center',
     justifyContent: 'center',
   },
   iconWrapActive: {
-    backgroundColor: 'rgba(255, 194, 28, 0.22)',
-    shadowColor: '#ffc21c',
-    shadowOpacity: 0.45,
-    shadowRadius: 18,
+    backgroundColor: 'rgba(255, 255, 255, 0.42)',
+    shadowColor: '#8fd9fb',
+    shadowOpacity: 0.2,
+    shadowRadius: 14,
     shadowOffset: { width: 0, height: 6 },
   },
   icon: {
-    opacity: 0.55,
+    opacity: 0.72,
   },
   iconActive: {
     opacity: 1,

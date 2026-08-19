@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { NavigationContainer, type NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useAppContext } from '../context/AppContext';
@@ -29,6 +30,7 @@ export function MainNavigator() {
 
   return (
     <NavigationContainer>
+      <StatusBar barStyle="dark-content" backgroundColor="#d2eef9" />
       <Stack.Navigator screenOptions={{ headerShown: false, animation: 'fade' }}>
         {!finishedOnboarding ? (
           <>
