@@ -210,6 +210,7 @@ function FallingToken({ x, image, size, duration, paused, onPress, onMiss }: { x
   const missedRef = useRef(false);
   const pressRef = useRef(onPress);
   const missRef = useRef(onMiss);
+  const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
     pressRef.current = onPress;
@@ -222,6 +223,7 @@ function FallingToken({ x, image, size, duration, paused, onPress, onMiss }: { x
       return;
     }
     missedRef.current = false;
+    setHidden(false);
     Animated.timing(translateY, {
       toValue: Dimensions.get('window').height - 120,
       duration,
@@ -236,12 +238,16 @@ function FallingToken({ x, image, size, duration, paused, onPress, onMiss }: { x
     return () => translateY.stopAnimation();
   }, [duration, paused, translateY]);
 
+  if (hidden) return null;
+
   return (
     <Animated.View style={[styles.token, { left: x, transform: [{ translateY }] }]}>
       <Pressable
         style={[styles.tokenButton, { width: size, height: size }]}
         onPress={() => {
           missedRef.current = true;
+          translateY.stopAnimation();
+          setHidden(true);
           pressRef.current();
         }}
       >
