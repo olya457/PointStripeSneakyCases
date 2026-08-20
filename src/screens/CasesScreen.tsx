@@ -15,7 +15,7 @@ export function CasesScreen() {
   const { storyProgress } = useAppContext();
   const [tab, setTab] = useState<'sneaky' | 'mine'>('sneaky');
   const [currentIndex, setCurrentIndex] = useState(0);
-  const bottomSpace = insets.bottom + (height < 760 ? 188 : 208);
+  const bottomSpace = insets.bottom + (height < 760 ? 238 : 258);
 
   const currentCase = storyCases[currentIndex];
   const solvedCases = useMemo(() => storyCases.filter(item => storyProgress[item.id] === 'solved'), [storyProgress]);

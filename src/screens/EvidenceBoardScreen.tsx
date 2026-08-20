@@ -10,7 +10,7 @@ export function EvidenceBoardScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const bottomSpace = insets.bottom + (height < 760 ? 150 : 170);
+  const bottomSpace = insets.bottom + (height < 760 ? 200 : 220);
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: bottomSpace }}>
       <Text style={styles.eyebrow}>EVIDENCE BOARD</Text>

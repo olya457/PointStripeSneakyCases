@@ -48,7 +48,7 @@ export function EvidenceDetailScreen({ navigation, route }: Props) {
     setChecked(false);
   };
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 40 }}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 90 }}>
       <Pressable style={styles.back} onPress={() => navigation.goBack()}><Text style={styles.backText}>‹ Back</Text></Pressable>
       <View style={styles.headerRow}><View><Text style={styles.eyebrow}>EVIDENCE BOARD</Text><Text style={styles.title}>{item.title}</Text></View><Pressable style={styles.reset} onPress={resetBoard}><Text style={styles.resetText}>Reset</Text></Pressable></View>
       <View style={styles.progressBar}><View style={[styles.progressFill, { width: `${(completedCount / allClues.length) * 100}%` }]} /></View>

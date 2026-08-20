@@ -9,7 +9,7 @@ export function ClueCatchIntroScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
-  const bottomSpace = insets.bottom + (height < 760 ? 150 : 170);
+  const bottomSpace = insets.bottom + (height < 760 ? 200 : 220);
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 8, paddingBottom: bottomSpace }}>
       <Image source={require('../assets/clue-catch-hero.png')} style={styles.image} resizeMode="contain" />

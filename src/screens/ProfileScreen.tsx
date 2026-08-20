@@ -22,7 +22,7 @@ export function ProfileScreen() {
   const completionPercent = overallTotal ? Math.round((overallCompleted / overallTotal) * 100) : 0;
   const correctDeductions = totalStoryCases + totalLieCases ? Math.round(((solvedCases + lieWins) / (totalStoryCases + totalLieCases)) * 100) : 0;
   const openTab = (screen: 'Cases' | 'LieDetector' | 'Evidence' | 'ClueCatch' | 'Profile') => navigation.navigate('Tabs', { screen });
-  const bottomSpace = insets.bottom + (height < 760 ? 150 : 170);
+  const bottomSpace = insets.bottom + (height < 760 ? 200 : 220);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 16, paddingBottom: bottomSpace }}>

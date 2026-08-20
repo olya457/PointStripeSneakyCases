@@ -17,7 +17,7 @@ export function CaseDetailScreen({ navigation, route }: Props) {
   const isCorrect = selected === item.correctAnswer;
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 40 }}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 90 }}>
       <Pressable style={styles.back} onPress={() => navigation.goBack()}>
         <Text style={styles.backText}>‹ Back</Text>
       </Pressable>

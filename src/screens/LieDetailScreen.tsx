@@ -20,7 +20,7 @@ export function LieDetailScreen({ navigation, route }: Props) {
   const toggle = (code: string) => setSelected(prev => (prev.includes(code) ? prev.filter(entry => entry !== code) : [...prev, code]));
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 40 }}>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingTop: insets.top + 12, paddingBottom: 90 }}>
       <Pressable style={styles.back} onPress={() => navigation.goBack()}><Text style={styles.backText}>‹ Back</Text></Pressable>
       <View style={styles.row}>
         <Text style={[styles.label, item.difficulty === 'Easy' && styles.labelEasy, item.difficulty === 'Hard' && styles.labelHard]}>{item.difficulty.toUpperCase()}</Text>
