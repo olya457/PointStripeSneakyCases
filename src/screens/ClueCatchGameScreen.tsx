@@ -5,6 +5,7 @@ import { useAppContext } from '../context/AppContext';
 import type { RootStackParamList } from '../navigation/MainNavigator';
 
 type ItemType = { id: number; x: number; good: boolean; image: any; size: number; duration: number };
+type PopupType = { id: number; x: number; y: number; label: string; positive: boolean };
 type Props = NativeStackScreenProps<RootStackParamList, 'ClueCatchGame'>;
 
 const TOTAL_TIME = 30;
@@ -35,7 +36,9 @@ export function ClueCatchGameScreen({ navigation }: Props) {
   const [finished, setFinished] = useState(false);
   const [mistakes, setMistakes] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [popups, setPopups] = useState<PopupType[]>([]);
   const spawnRef = useRef(0);
+  const popupRef = useRef(0);
   const screen = useMemo(() => Dimensions.get('window'), []);
 
   const round = useMemo(() => {
@@ -108,13 +111,16 @@ export function ClueCatchGameScreen({ navigation }: Props) {
 
   const handleCatch = useCallback((item: ItemType) => {
     setItems(prev => prev.filter(entry => entry.id !== item.id));
+    popupRef.current += 1;
     if (item.good) {
       setScore(prev => prev + 200);
       setEvidence(prev => prev + 1);
+      setPopups(prev => [...prev, { id: popupRef.current, x: item.x, y: screen.height * 0.3, label: '+200', positive: true }]);
     } else {
       setScore(prev => Math.max(prev - 100, 0));
+      setPopups(prev => [...prev, { id: popupRef.current, x: item.x, y: screen.height * 0.3, label: '-100', positive: false }]);
     }
-  }, []);
+  }, [screen.height]);
 
   const handleMiss = useCallback((item: ItemType) => {
     setItems(prev => prev.filter(entry => entry.id !== item.id));
@@ -153,6 +159,17 @@ export function ClueCatchGameScreen({ navigation }: Props) {
           paused={paused}
           onPress={() => handleCatch(item)}
           onMiss={() => handleMiss(item)}
+        />
+      ))}
+
+      {popups.map(popup => (
+        <ScorePopup
+          key={popup.id}
+          x={popup.x}
+          y={popup.y}
+          label={popup.label}
+          positive={popup.positive}
+          onDone={() => setPopups(prev => prev.filter(entry => entry.id !== popup.id))}
         />
       ))}
 
@@ -206,7 +223,7 @@ export function ClueCatchGameScreen({ navigation }: Props) {
 }
 
 function FallingToken({ x, image, size, duration, paused, onPress, onMiss }: { x: number; image: any; size: number; duration: number; paused: boolean; onPress: () => void; onMiss: () => void }) {
-  const translateY = useRef(new Animated.Value(-80)).current;
+  const top = useRef(new Animated.Value(-80)).current;
   const missedRef = useRef(false);
   const pressRef = useRef(onPress);
   const missRef = useRef(onMiss);
@@ -219,40 +236,90 @@ function FallingToken({ x, image, size, duration, paused, onPress, onMiss }: { x
 
   useEffect(() => {
     if (paused) {
-      translateY.stopAnimation();
+      top.stopAnimation();
       return;
     }
     missedRef.current = false;
     setHidden(false);
-    Animated.timing(translateY, {
+    top.setValue(-80);
+    Animated.timing(top, {
       toValue: Dimensions.get('window').height - 120,
       duration,
       easing: Easing.linear,
-      useNativeDriver: true,
+      useNativeDriver: false,
     }).start(({ finished }) => {
       if (finished && !missedRef.current) {
         missedRef.current = true;
         missRef.current();
       }
     });
-    return () => translateY.stopAnimation();
-  }, [duration, paused, translateY]);
+    return () => top.stopAnimation();
+  }, [duration, paused, top]);
 
   if (hidden) return null;
 
   return (
-    <Animated.View style={[styles.token, { left: x, transform: [{ translateY }] }]}>
+    <Animated.View style={[styles.token, { left: x, top }]}>
       <Pressable
         style={[styles.tokenButton, { width: size, height: size }]}
+        android_disableSound
         onPress={() => {
           missedRef.current = true;
-          translateY.stopAnimation();
+          top.stopAnimation();
           setHidden(true);
           pressRef.current();
         }}
       >
         <Image source={image} style={{ width: size, height: size }} resizeMode="contain" />
       </Pressable>
+    </Animated.View>
+  );
+}
+
+function ScorePopup({ x, y, label, positive, onDone }: { x: number; y: number; label: string; positive: boolean; onDone: () => void }) {
+  const translateY = useRef(new Animated.Value(0)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.parallel([
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 90,
+        useNativeDriver: true,
+      }),
+      Animated.timing(translateY, {
+        toValue: -32,
+        duration: 700,
+        easing: Easing.out(Easing.cubic),
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    const timeout = setTimeout(() => {
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 180,
+        useNativeDriver: true,
+      }).start(() => onDone());
+    }, 420);
+
+    return () => clearTimeout(timeout);
+  }, [onDone, opacity, translateY]);
+
+  return (
+    <Animated.View
+      pointerEvents="none"
+      style={[
+        styles.popup,
+        {
+          left: x - 4,
+          top: y,
+          opacity,
+          transform: [{ translateY }],
+        },
+      ]}
+    >
+      <Text style={[styles.popupText, positive ? styles.popupTextGood : styles.popupTextBad]}>{label}</Text>
     </Animated.View>
   );
 }
@@ -269,8 +336,12 @@ const styles = StyleSheet.create({
   hearts: { color: '#fff', fontSize: 18 },
   pause: { width: 36, height: 36, borderRadius: 12, backgroundColor: 'rgba(185,232,251,0.92)', alignItems: 'center', justifyContent: 'center' },
   pauseText: { color: '#12324a', fontWeight: '900' },
-  token: { position: 'absolute' },
+  token: { position: 'absolute', zIndex: 3, elevation: 3 },
   tokenButton: { alignItems: 'center', justifyContent: 'center' },
+  popup: { position: 'absolute', zIndex: 4, elevation: 4 },
+  popupText: { fontSize: 24, fontWeight: '900', textShadowColor: 'rgba(18,50,74,0.2)', textShadowOffset: { width: 0, height: 2 }, textShadowRadius: 4 },
+  popupTextGood: { color: '#16a34a' },
+  popupTextBad: { color: '#dc2626' },
   overlay: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(195,228,244,0.54)', alignItems: 'center', justifyContent: 'center', padding: 22 },
   modal: { width: '100%', borderRadius: 28, backgroundColor: '#eefaff', padding: 22, borderWidth: 1, borderColor: 'rgba(18,86,122,0.08)' },
   modalTitle: { color: '#12324a', fontSize: 30, fontWeight: '900', textAlign: 'center', marginBottom: 16 },
